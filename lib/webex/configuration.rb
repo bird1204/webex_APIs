@@ -1,6 +1,6 @@
 module Webex
   class Configuration
-    %w( site_name webex_id password ).each do |name|
+    %w( site_name webex_id password back_type back_url).each do |name|
       define_singleton_method(name) { ENV["WEBEX_#{name.upcase}"] }
     end
 
