@@ -6,7 +6,7 @@
 </head>
 <body>
   <form action="https://engsound.webex.com/engsound/p.php" method="post">
-    <% @partner.generate_params(api_type: 'LI').each do |k, v| %>
+    <% @partner.each do |k, v| %>
       <%= k %>
       <input type="text" name="<%= k %>" value="<%= v %>"><br>
     <% end %>
