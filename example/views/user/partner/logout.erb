@@ -5,8 +5,8 @@
   <title>Document</title>
 </head>
 <body>
-  <form action="https://engsound.webex.com/engsound/p.php" method="post">
-    <% @partner.each do |k, v| %>
+  <form action="<%=@partner[:url]%>" method="post">
+    <% @partner[:params].each do |k, v| %>
       <%= k %>
       <input type="text" name="<%= k %>" value="<%= v %>"><br>
     <% end %>

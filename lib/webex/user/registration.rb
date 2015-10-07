@@ -25,19 +25,24 @@ module Webex
         option_required! :webex_id, :password, :partner_id
       end
 
-      def sign_up
+      def sign_up(condition={})
         option_required! :webex_id, :first_name, :last_name, :email, :password, :partner_id
         { params: generate_params(api_type: 'SU'),
           url: URI.join(CONFIGURATION.host_url + PATH_URL) }
       end
 
-      def edit
+      def edit(condition={})
         option_required! :webex_id, :password, :partner_id
         { params: generate_params(api_type: 'EU'),
           url: URI.join(CONFIGURATION.host_url + PATH_URL) }
       end
 
       private
+
+      def request(path, params = {})
+        api_url = URI.join(CONFIGURATION.host_url + path)
+        Net::HTTP.post_form api_url, params
+      end
 
       def tracking_code_hash
         attribute_length!(10, tracking_codes)
