@@ -21,7 +21,7 @@ module Webex
       #               {CreateAccount: nil, TollFreeCallIn: nil, TollCallIn1: nil, ParticipantAccessCode: nil, SubscribeAccessCode: nil}]
       def initialize(attributes = {})
         attributes.each { |k, v| send("#{k}=", v) }
-        set_env_attributes!
+        env_attributes! :webex_id, :password, :back_url
         option_required! :webex_id, :password, :partner_id
       end
 
@@ -80,12 +80,6 @@ module Webex
         hash
       end
 
-      def set_env_attributes!
-        %w(webex_id password back_url).each do |attribute|
-          send("#{attribute}=", CONFIGURATION.send(attribute)) unless send(attribute)
-        end
-      end
-
       def merge_hash!(overwrite_params)
         overwrite_params.merge!(office_phones) if office_phones
         overwrite_params.merge!(fax_phones) if fax_phones
@@ -133,12 +127,6 @@ module Webex
           result[:NWID] = new_webex_id
         end
         merge_hash!(result)
-      end
-
-      def option_required!(*option_names)
-        option_names.each do |option_name|
-          raise MissingOption, %Q{option "#{option_name}" is required.} unless send(option_name)
-        end
       end
 
       def attribute_length!(length, attribute)

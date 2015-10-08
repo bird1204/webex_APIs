@@ -6,7 +6,7 @@ module Webex
                     :session, :first_name, :last_name, :new_password
       def initialize(attributes = {})
         attributes.each { |k, v| send("#{k}=", v) }
-        generate_attributes
+        env_attributes! :webex_id, :back_type, :back_url
         option_required! :webex_id, :back_type, :back_url
       end
 
@@ -21,12 +21,6 @@ module Webex
       end
 
       private
-
-      def generate_attributes
-        %w(webex_id back_type back_url).each do |attribute|
-          send("#{attribute}=", CONFIGURATION.send(attribute)) unless send(attribute)
-        end
-      end
 
       def generate_params(overwrite_params = {})
         result = {}
@@ -45,12 +39,6 @@ module Webex
           result[:NPW] = new_password
         end
         result.delete_if { |k, v| v.nil? }
-      end
-
-      def option_required!(*option_names)
-        option_names.each do |option_name|
-          raise MissingOption, %Q{option "#{option_name}" is required.} unless send(option_name)
-        end
       end
     end
   end
