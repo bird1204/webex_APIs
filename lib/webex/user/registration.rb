@@ -39,11 +39,6 @@ module Webex
 
       private
 
-      def request(path, params = {})
-        api_url = URI.join(CONFIGURATION.host_url + path)
-        Net::HTTP.post_form api_url, params
-      end
-
       def tracking_code_hash
         attribute_length!(10, tracking_codes)
         hash = {}
