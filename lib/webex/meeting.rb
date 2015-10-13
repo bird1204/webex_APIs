@@ -7,7 +7,9 @@ module Webex
     PATH_URL = 'm.php'.freeze
     def env_attributes!(*env_variables)
       env_variables.each do |attribute|
-        send("#{attribute}=", CONFIGURATION.send(attribute)) unless send(attribute)
+        if %w( site_name webex_id password back_type back_url).include?(attribute.to_s)
+          send("#{attribute}=", CONFIGURATION.send(attribute)) unless send(attribute)
+        end
       end
     end
 

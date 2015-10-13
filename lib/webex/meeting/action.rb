@@ -2,7 +2,7 @@ module Webex
   module User
     # comment
     class Action
-      attr_accessor :meeting_key, :cancel_mail?, :back_url,
+      attr_accessor :meeting_key, :cancel_mail, :back_url,
         :start_feature, :app_handle, :location, :parameter, :url, :document_location,
         :attendee_name, :attendee_mail, :phone, :password, :registration_id
 
@@ -58,6 +58,10 @@ module Webex
       end
 
       private
+
+      def cancel_mail?
+        cancel_mail
+      end
 
       def generate_params(overwrite_params = {})
         result = {}

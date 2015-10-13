@@ -2,7 +2,7 @@ module Webex
   module Meeting
     # comment
     class Attendee
-      attr_accessor :meeting_key, :back_url, :invitation, :attendees, :cancel_mail?, :email
+      attr_accessor :meeting_key, :back_url, :invitation, :attendees, :cancel_mail, :email
 
       # attendees: [{FullName: FullName1, EmailAddress: nil, PhoneCountry: nil, PhoneArea: nil, PhoneLocal: nil, PhoneExt: nil, TimeZone: nil, Language: nil, Locale: nil, AddToAddressBook: nil},
       #               {FullName: FullName1, EmailAddress: nil, PhoneCountry: nil, PhoneArea: nil, PhoneLocal: nil, PhoneExt: nil, TimeZone: nil, Language: nil, Locale: nil, AddToAddressBook: nil},
@@ -32,6 +32,10 @@ module Webex
       end
 
       private
+
+      def cancel_mail?
+        cancel_mail
+      end
 
       def attendees_hash
         index_table ={FullName: :FN, EmailAddress: :EA, PhoneCountry: :PhoneCountry, PhoneArea: :PhoneArea, PhoneLocal: :PhoneLocal, PhoneExt: :PhoneExt, TimeZone: :TimeZone, Language: :Language, Locale: :Locale, AddToAddressBook: :AddToAddressBook}

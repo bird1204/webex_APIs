@@ -3,7 +3,7 @@ module Webex
     # comment
     class Presenter
       attr_accessor :meeting_key, :back_url, :email, :full_name, :invitation,
-                    :phones, :cancel_mail?
+                    :phones, :cancel_mail
       # phones = {PhoneCountry: nil, PhoneArea: nil, PhoneNumber: nil, PhoneExt: nil}
 
       def initialize(attributes = {})
@@ -24,6 +24,10 @@ module Webex
       end
 
       private
+
+      def cancel_mail?
+        cancel_mail
+      end
 
       def phone_params
         result = {}
