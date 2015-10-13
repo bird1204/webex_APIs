@@ -1,13 +1,10 @@
-require 'webex/user/partner'
-require 'webex/user/registration'
-require 'webex/user/activation'
-require 'webex/user/file'
-require 'webex/user/report'
-
+require 'webex/meeting/presenter'
+require 'webex/meeting/attendee'
+require 'webex/meeting/action'
 module Webex
   # comment
-  module User
-    PATH_URL = 'p.php'.freeze
+  module Meeting
+    PATH_URL = 'm.php'.freeze
     def env_attributes!(*env_variables)
       env_variables.each do |attribute|
         send("#{attribute}=", CONFIGURATION.send(attribute)) unless send(attribute)

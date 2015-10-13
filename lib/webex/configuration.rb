@@ -10,6 +10,8 @@ module Webex
       "https://engsound.webex.com/engsound/"
     end
   end
+
+  CONFIGURATION = Webex::Configuration
 end
 
 
