@@ -2,6 +2,7 @@ module Webex
   module Meeting
     # comment
     class Attendee
+      include Webex
       attr_accessor :meeting_key, :back_url, :invitation, :attendees, :cancel_mail, :email
 
       # attendees: [{FullName: FullName1, EmailAddress: nil, PhoneCountry: nil, PhoneArea: nil, PhoneLocal: nil, PhoneExt: nil, TimeZone: nil, Language: nil, Locale: nil, AddToAddressBook: nil},
@@ -9,7 +10,7 @@ module Webex
       #               {FullName: FullName1, EmailAddress: nil, PhoneCountry: nil, PhoneArea: nil, PhoneLocal: nil, PhoneExt: nil, TimeZone: nil, Language: nil, Locale: nil, AddToAddressBook: nil}]
       def initialize(attributes = {})
         attributes.each { |k, v| send("#{k}=", v) }
-        env_attributes! :back_url
+        env_attributes!
         option_required! :back_url, :meeting_key
       end
 

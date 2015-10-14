@@ -2,11 +2,12 @@ module Webex
   module User
     # comment
     class File
+      include Webex
       attr_accessor :file_name, :back_url, :current_directory
 
       def initialize(attributes = {})
         attributes.each { |k, v| send("#{k}=", v) }
-        env_attributes! :back_url
+        env_attributes!
         option_required! :back_url
       end
 

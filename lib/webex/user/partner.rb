@@ -2,11 +2,12 @@ module Webex
   module User
     # comment
     class Partner
+      include Webex
       attr_accessor :webex_id, :ticket, :password, :back_type, :back_url, :email,
                     :session, :first_name, :last_name, :new_password
       def initialize(attributes = {})
         attributes.each { |k, v| send("#{k}=", v) }
-        env_attributes! :webex_id, :back_type, :back_url
+        env_attributes!
         option_required! :webex_id, :back_type, :back_url
       end
 

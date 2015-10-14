@@ -2,13 +2,14 @@ module Webex
   module Meeting
     # comment
     class Presenter
+      include Webex
       attr_accessor :meeting_key, :back_url, :email, :full_name, :invitation,
                     :phones, :cancel_mail
       # phones = {PhoneCountry: nil, PhoneArea: nil, PhoneNumber: nil, PhoneExt: nil}
 
       def initialize(attributes = {})
         attributes.each { |k, v| send("#{k}=", v) }
-        env_attributes! :back_url, :meeting_key, :email
+        env_attributes!
         option_required! :back_url
       end
 

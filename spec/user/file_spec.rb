@@ -1,27 +1,18 @@
 require 'spec_helper'
 
 describe Webex::User::File do
-  API_URL = 'https://engsound.webex.com/engsound/p.php'
-  CUSTOM_ATTRIBUTES = { back_url: 'localhost:4567' }
-
-  before :each do
-    ENV['WEBEX_SITE_NAME'] = 'engsound'
-    ENV['WEBEX_WEBEX_ID'] = 'test1118'
-    ENV['WEBEX_PASSWORD'] = 'yeh1118'
-    ENV['WEBEX_SITE_ID'] = '358562'
-    ENV['WEBEX_BACK_TYPE'] = 'GoBack'
-    ENV['WEBEX_BACK_URL'] = 'localhost:4567'
-  end
+  api_url = 'https://engsound.webex.com/engsound/p.php'
+  custom_attributes = { back_url: 'localhost:4567' }
 
   context '[PARAMS]download' do
     api_type = 'DF'
 
     it '#api /p.php with custom set' do
-      params = Webex::User::File.new(CUSTOM_ATTRIBUTES.merge!(file_name: 'xxx')).download
+      params = Webex::User::File.new(custom_attributes.merge!(file_name: 'xxx')).download
       p params
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq API_URL
+      expect(params[:url].to_s).to eq api_url
     end
   end
 
@@ -35,11 +26,11 @@ describe Webex::User::File do
     api_type = 'LF'
 
     it '#api /p.php with custom set' do
-      params = Webex::User::File.new(CUSTOM_ATTRIBUTES).list
+      params = Webex::User::File.new(custom_attributes).list
       p params
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq API_URL
+      expect(params[:url].to_s).to eq api_url
     end
   end
 end

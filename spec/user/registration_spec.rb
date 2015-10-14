@@ -1,14 +1,6 @@
 require 'spec_helper'
 describe Webex::User::Registration do
-  API_URL = 'https://engsound.webex.com/engsound/p.php'
-  before :each do
-    ENV['WEBEX_SITE_NAME'] = 'engsound'
-    ENV['WEBEX_WEBEX_ID'] = 'test1118'
-    ENV['WEBEX_PASSWORD'] = 'yeh1118'
-    ENV['WEBEX_SITE_ID'] = '358562'
-    ENV['WEBEX_BACK_TYPE'] = 'GoBack'
-    ENV['WEBEX_BACK_URL'] = 'localhost:4567'
-  end
+  api_url = 'https://engsound.webex.com/engsound/p.php'
 
   context '[PARAMS]sign_up' do
     api_type = 'SU'
@@ -19,7 +11,7 @@ describe Webex::User::Registration do
       p params
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq API_URL
+      expect(params[:url].to_s).to eq api_url
     end
 
     it '#api /p.php with add_phone SUCCESS set' do
@@ -29,7 +21,7 @@ describe Webex::User::Registration do
       p params
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq API_URL
+      expect(params[:url].to_s).to eq api_url
     end
 
     it '#api /p.php with add support SUCCESS set' do
@@ -41,7 +33,7 @@ describe Webex::User::Registration do
       p params
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq API_URL
+      expect(params[:url].to_s).to eq api_url
     end
 
     it '#api /p.php with add tracking_code SUCCESS set' do
@@ -50,7 +42,7 @@ describe Webex::User::Registration do
       p params
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq API_URL
+      expect(params[:url].to_s).to eq api_url
     end
   end
 
@@ -78,7 +70,7 @@ describe Webex::User::Registration do
       p params
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq API_URL
+      expect(params[:url].to_s).to eq api_url
     end
 
     it '#api /p.php with TSP SUCCESS set' do
@@ -89,7 +81,7 @@ describe Webex::User::Registration do
       p params
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq API_URL
+      expect(params[:url].to_s).to eq api_url
     end
   end
 

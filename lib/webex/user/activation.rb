@@ -2,11 +2,12 @@ module Webex
   module User
     # comment
     class Activation
+      include Webex
       attr_accessor :webex_id, :partner_id, :back_url
 
       def initialize(attributes = {})
         attributes.each { |k, v| send("#{k}=", v) }
-        env_attributes! :webex_id, :back_url
+        env_attributes!
         option_required! :webex_id, :partner_id, :back_url
       end
 

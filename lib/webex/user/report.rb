@@ -2,12 +2,13 @@ module Webex
   module User
     # comment
     class Report
+      include Webex
       attr_accessor :report_type, :back_url, :start_month, :start_year, :start_date, 
                     :end_month, :end_year, :end_date, :topic, :sort_result_by
 
       def initialize(attributes = {})
         attributes.each { |k, v| send("#{k}=", v) }
-        env_attributes! :back_url
+        env_attributes!
         option_required! :report_type, :back_url
       end
 

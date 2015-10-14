@@ -6,13 +6,9 @@ module Webex
     end
 
     def self.host_url
-      # "https://#{site_name}.webex.com/#{site_name}/"
-      "https://engsound.webex.com/engsound/"
+      "https://#{site_name}.webex.com/#{site_name}/"
+      # "https://engsound.webex.com/engsound/"
     end
   end
-
   CONFIGURATION = Webex::Configuration
 end
-
-
-

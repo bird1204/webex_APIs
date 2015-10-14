@@ -2,6 +2,7 @@ module Webex
   module User
     # comment
     class Registration
+      include Webex
       attr_accessor :webex_id, :first_name, :last_name, :email, :password, :partner_id, :back_url,
                     # optional attributes
                     :address_1, :address_2, :city, :state, :zip_code, :country, :office_phones, :fax_phones,
@@ -21,7 +22,7 @@ module Webex
       #               {CreateAccount: nil, TollFreeCallIn: nil, TollCallIn1: nil, ParticipantAccessCode: nil, SubscribeAccessCode: nil}]
       def initialize(attributes = {})
         attributes.each { |k, v| send("#{k}=", v) }
-        env_attributes! :webex_id, :password, :back_url
+        env_attributes!
         option_required! :webex_id, :password, :partner_id
       end
 
