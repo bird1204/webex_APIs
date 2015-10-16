@@ -9,9 +9,10 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Wei-Yi Chiu"]
   spec.email         = ["bird1204@gmail.com"]
 
-  spec.summary       = %q{webex API}
-  spec.description   = %q{webex API}
+  spec.summary       = %q{webex APIs}
+  spec.description   = %q{webex APIs for rails, according to cisco webex}
   spec.homepage      = "https://github.com/bird1204"
+  spec.license = 'MIT'
 
   # Prevent pushing this gem to RubyGems.org by setting 'allowed_push_host', or
   # delete this section to allow pushing this gem to any host.
@@ -28,6 +29,6 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency "bundler", "~> 1.9"
   spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec"
-  spec.add_development_dependency "sinatra"
+  spec.add_development_dependency 'rspec', '~> 0'
+  spec.add_development_dependency "sinatra", '~> 0'
 end
