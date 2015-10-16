@@ -8,7 +8,7 @@ describe Webex::User::Report do
 
     it '#api /p.php with custom set' do
       params = Webex::User::Report.new(custom_attributes).display
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url

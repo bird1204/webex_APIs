@@ -9,7 +9,7 @@ describe Webex::Meeting::Action do
 
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Action.new(custom_attributes).delete
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url
@@ -27,7 +27,7 @@ describe Webex::Meeting::Action do
 
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Action.new(custom_attributes).host
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url
@@ -45,7 +45,7 @@ describe Webex::Meeting::Action do
 
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Action.new(custom_attributes).join
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url
@@ -63,7 +63,7 @@ describe Webex::Meeting::Action do
 
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Action.new(custom_attributes).list_meetings
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url
@@ -75,31 +75,7 @@ describe Webex::Meeting::Action do
 
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Action.new(custom_attributes).list_open_meetings
-      p params
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
-    end
-  end
-
-  context '[PARAMS]edit' do
-    api_type = 'EM'
-
-    it '#api /m.php with custom set' do
-      params = Webex::Meeting::Action.new(custom_attributes).edit
-      p params
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
-    end
-  end
-
-  context '[PARAMS]schedule' do
-    api_type = 'SM'
-
-    it '#api /m.php with custom set' do
-      params = Webex::Meeting::Action.new(custom_attributes).schedule
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url

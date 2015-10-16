@@ -9,7 +9,7 @@ describe Webex::User::Activation do
 
     it '#api /p.php with custom set' do
       params = Webex::User::Activation.new(custom_attributes).activate
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url
@@ -28,7 +28,7 @@ describe Webex::User::Activation do
 
     it '#api /p.php with custom set' do
       params = Webex::User::Activation.new(custom_attributes).deactivate
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url

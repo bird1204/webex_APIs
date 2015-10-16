@@ -8,7 +8,7 @@ describe Webex::User::Registration do
 
     it '#api /p.php with minimum SUCCESS set' do
       params = Webex::User::Registration.new(attributes).sign_up
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url
@@ -18,7 +18,7 @@ describe Webex::User::Registration do
       attributes.merge!(office_phones: {OPhoneCountry: 123123, OPhoneArea: 123213, OPhone: 12321, OfficePhExt: 12312})
       attributes.merge!(office_phones: {FPhoneCountry: 21321, FPhoneArea: 123, FPhoneLocal: 123, FPhoneExt: 123})
       params = Webex::User::Registration.new(attributes).sign_up
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url
@@ -30,7 +30,7 @@ describe Webex::User::Registration do
                                     SupportAccessAnywhere: 21351, SupportMyRecordings: 442, SupportEventDocuments: 112,
                                     SupportPersonalLobby: 21351})
       params = Webex::User::Registration.new(attributes).sign_up
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url
@@ -39,7 +39,7 @@ describe Webex::User::Registration do
     it '#api /p.php with add tracking_code SUCCESS set' do
       attributes.merge!(tracking_codes: [555, 666, 222, 123, 5325, 6734, 6241])
       params = Webex::User::Registration.new(attributes).sign_up
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url
@@ -67,7 +67,7 @@ describe Webex::User::Registration do
     it '#api /p.php with minimum SUCCESS set' do
       attributes = { webex_id: 'test', password: 'yeh', partner_id: 'test12312'}
       params = Webex::User::Registration.new(attributes).edit
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url
@@ -78,7 +78,7 @@ describe Webex::User::Registration do
                     {CreateAccount: 'nil', TollFreeCallIn: 'nil', TollCallIn1: 'nil', ParticipantAccessCode: 'nil', SubscribeAccessCode: 'nil'},
                     {CreateAccount: 'nil', TollFreeCallIn: 'nil', TollCallIn1: 'nil', ParticipantAccessCode: 'nil', SubscribeAccessCode: 'nil'}])
       params = Webex::User::Registration.new(attributes).edit
-      p params
+      
       expect(params.keys).to match_array [:params, :url]
       expect(params[:params][:AT]).to eq api_type
       expect(params[:url].to_s).to eq api_url
