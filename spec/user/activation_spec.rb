@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Webex::User::Activation do
-  api_url = 'https://engsound.webex.com/engsound/p.php'
   custom_attributes = { webex_id: 'test', partner_id: 'partner_id' }
 
   context '[PARAMS]activate' do
@@ -9,10 +8,10 @@ describe Webex::User::Activation do
 
     it '#api /p.php with custom set' do
       params = Webex::User::Activation.new(custom_attributes).activate
-      
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'PartnerIDError'
     end
   end
 
@@ -22,16 +21,15 @@ describe Webex::User::Activation do
     end
   end
 
-
   context '[PARAMS]deactivate' do
     api_type = 'IN'
 
     it '#api /p.php with custom set' do
       params = Webex::User::Activation.new(custom_attributes).deactivate
-      
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'PartnerIDError'
     end
   end
 

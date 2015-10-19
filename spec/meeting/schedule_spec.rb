@@ -10,9 +10,9 @@ describe Webex::Meeting::Schedule do
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Schedule.new(custom_attributes).edit
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'AccessDenied'
     end
   end
 
@@ -22,9 +22,9 @@ describe Webex::Meeting::Schedule do
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Schedule.new(custom_attributes).schedule
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'AccessDenied'
     end
   end
 
@@ -34,9 +34,9 @@ describe Webex::Meeting::Schedule do
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Schedule.new(custom_attributes).impromptu
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'AccessDenied'
     end
   end
 end

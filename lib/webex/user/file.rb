@@ -3,6 +3,8 @@ module Webex
     # comment
     class File
       include Webex
+      include Webex::User
+
       attr_accessor :file_name, :back_url, :current_directory
 
       def initialize(attributes = {})
@@ -13,13 +15,13 @@ module Webex
 
       def download
         option_required! :file_name
-        { params: generate_params(api_type: 'DF'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'DF')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def list
-        { params: generate_params(api_type: 'LF'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'LF')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       private

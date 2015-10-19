@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Webex::Meeting::Action do
-  api_url = 'https://engsound.webex.com/engsound/m.php'
   custom_attributes = { meeting_key: 'fweofuw9873ri' }
 
   context '[PARAMS]delete' do
@@ -10,9 +9,9 @@ describe Webex::Meeting::Action do
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Action.new(custom_attributes).delete
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'AccessDenied'
     end
   end
 
@@ -28,9 +27,9 @@ describe Webex::Meeting::Action do
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Action.new(custom_attributes).host
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'AccessDenied'
     end
   end
 
@@ -46,9 +45,9 @@ describe Webex::Meeting::Action do
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Action.new(custom_attributes).join
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'InvalidDataFormat'
     end
   end
 
@@ -63,22 +62,19 @@ describe Webex::Meeting::Action do
 
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Action.new(custom_attributes).list_meetings
-      
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'AccessDenied'
     end
   end
 
   context '[PARAMS]list_open_meetings' do
-    api_type = 'OM'
 
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Action.new(custom_attributes).list_open_meetings
-      
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'AccessDenied'
     end
   end
 end

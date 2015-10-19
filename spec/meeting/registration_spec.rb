@@ -11,9 +11,9 @@ describe Webex::Meeting::Registration do
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Registration.new(custom_attributes).form
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'InvalidDataFormat'
     end
   end
 
@@ -29,9 +29,9 @@ describe Webex::Meeting::Registration do
     it '#api /m.php with minimum set' do
       params = Webex::Meeting::Registration.new(custom_attributes.merge!(register_attributes)).register
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'InvalidDataFormat'
     end
 
     it '#api /m.php with full set' do
@@ -53,9 +53,9 @@ describe Webex::Meeting::Registration do
                           )
       ).register
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'InvalidDataFormat'
     end
   end
 

@@ -3,6 +3,7 @@ module Webex
     # comment
     class Report
       include Webex
+      include Webex::User
       attr_accessor :report_type, :back_url, :start_month, :start_year, :start_date, 
                     :end_month, :end_year, :end_date, :topic, :sort_result_by
 
@@ -13,8 +14,8 @@ module Webex
       end
 
       def display
-        { params: generate_params(api_type: 'QR'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'QR')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       private

@@ -9,9 +9,9 @@ describe Webex::Meeting::Presenter do
 
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Presenter.new(custom_attributes.merge!(full_name: 'full_name')).add
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'AccessDenied'
     end
   end
 
@@ -26,9 +26,9 @@ describe Webex::Meeting::Presenter do
 
     it '#api /m.php with custom set' do
       params = Webex::Meeting::Presenter.new(custom_attributes).delete
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'AccessDenied'
     end
   end
 end

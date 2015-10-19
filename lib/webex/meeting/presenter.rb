@@ -3,6 +3,7 @@ module Webex
     # comment
     class Presenter
       include Webex
+      include Webex::Meeting
       attr_accessor :meeting_key, :back_url, :email, :full_name, :invitation,
                     :phones, :cancel_mail
       # phones = {PhoneCountry: nil, PhoneArea: nil, PhoneNumber: nil, PhoneExt: nil}
@@ -15,13 +16,15 @@ module Webex
 
       def add
         option_required! :full_name
-        { params: generate_params(api_type: 'AP'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'AP')
+        p res.body
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def delete
-        { params: generate_params(api_type: 'DP'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'DP')
+        p res.body
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       private

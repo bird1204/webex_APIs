@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Webex::User::Report do
-  api_url = 'https://engsound.webex.com/engsound/p.php'
   custom_attributes = { report_type: '0' }
   context '[PARAMS]display' do
     api_type = 'QR'
@@ -9,9 +8,9 @@ describe Webex::User::Report do
     it '#api /p.php with custom set' do
       params = Webex::User::Report.new(custom_attributes).display
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'UnknownATCommand'
     end
   end
 

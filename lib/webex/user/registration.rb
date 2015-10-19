@@ -3,6 +3,8 @@ module Webex
     # comment
     class Registration
       include Webex
+      include Webex::User
+
       attr_accessor :webex_id, :first_name, :last_name, :email, :password, :partner_id, :back_url,
                     # optional attributes
                     :address_1, :address_2, :city, :state, :zip_code, :country, :office_phones, :fax_phones,
@@ -28,14 +30,14 @@ module Webex
 
       def sign_up(condition={})
         option_required! :webex_id, :first_name, :last_name, :email, :password, :partner_id
-        { params: generate_params(api_type: 'SU'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'SU')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def edit(condition={})
         option_required! :webex_id, :password, :partner_id
-        { params: generate_params(api_type: 'EU'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'EU')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       private

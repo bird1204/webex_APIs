@@ -9,5 +9,8 @@ module Webex
   # comment
   module Meeting
     PATH_URL = 'm.php'.freeze
+    def post_url
+      URI.join(CONFIGURATION.host_url + PATH_URL)
+    end
   end
 end

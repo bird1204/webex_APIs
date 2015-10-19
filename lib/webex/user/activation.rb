@@ -3,6 +3,7 @@ module Webex
     # comment
     class Activation
       include Webex
+      include Webex::User
       attr_accessor :webex_id, :partner_id, :back_url
 
       def initialize(attributes = {})
@@ -12,13 +13,13 @@ module Webex
       end
 
       def activate
-        { params: generate_params(api_type: 'AC'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'AC')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def deactivate
-        { params: generate_params(api_type: 'IN'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'IN')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       private

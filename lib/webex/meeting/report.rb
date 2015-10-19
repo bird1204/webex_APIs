@@ -3,6 +3,7 @@ module Webex
     # comment
     class Report
       include Webex
+      include Webex::Meeting
       attr_accessor :recording_topic, :specify_url, :agenda, :registration,
                     :destination_address_after_session, :description, :email_address,
                     :duration_hours, :duration_minutes, :month, :year, :presenter,
@@ -18,8 +19,9 @@ module Webex
 
       def create
         option_required! :recording_topic
-        { params: generate_params(api_type: 'CR'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'CR')
+        p res.body
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       private

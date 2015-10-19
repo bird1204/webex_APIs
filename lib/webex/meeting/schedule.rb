@@ -3,6 +3,7 @@ module Webex
     # comment
     class Schedule
       include Webex
+      include Webex::Meeting
       attr_accessor :meeting_name, :meeting_type, :list_flag, :meeting_password, :password_filter_feature,
         :require_attendee_registration, :automatically_accept_registration, :attendee_information,
         :registration_password, :maxinum_registrations_allowed, :registration_close_year, :registration_close_month,
@@ -31,20 +32,19 @@ module Webex
       end
 
       def edit
-        { params: generate_params(api_type: 'EM'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'EM')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def schedule
-        { params: generate_params(api_type: 'SM'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'SM')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def impromptu
-        { params: generate_params(api_type: 'IM'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'IM')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
-
 
       private
 

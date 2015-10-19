@@ -1,6 +1,5 @@
 require 'spec_helper'
 describe Webex::User::Registration do
-  api_url = 'https://engsound.webex.com/engsound/p.php'
 
   context '[PARAMS]sign_up' do
     api_type = 'SU'
@@ -8,20 +7,18 @@ describe Webex::User::Registration do
 
     it '#api /p.php with minimum SUCCESS set' do
       params = Webex::User::Registration.new(attributes).sign_up
-      
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'PartnerIDError'
     end
 
     it '#api /p.php with add_phone SUCCESS set' do
       attributes.merge!(office_phones: {OPhoneCountry: 123123, OPhoneArea: 123213, OPhone: 12321, OfficePhExt: 12312})
       attributes.merge!(office_phones: {FPhoneCountry: 21321, FPhoneArea: 123, FPhoneLocal: 123, FPhoneExt: 123})
       params = Webex::User::Registration.new(attributes).sign_up
-      
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'PartnerIDError'
     end
 
     it '#api /p.php with add support SUCCESS set' do
@@ -31,18 +28,18 @@ describe Webex::User::Registration do
                                     SupportPersonalLobby: 21351})
       params = Webex::User::Registration.new(attributes).sign_up
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'PartnerIDError'
     end
 
     it '#api /p.php with add tracking_code SUCCESS set' do
       attributes.merge!(tracking_codes: [555, 666, 222, 123, 5325, 6734, 6241])
       params = Webex::User::Registration.new(attributes).sign_up
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'PartnerIDError'
     end
   end
 
@@ -68,9 +65,9 @@ describe Webex::User::Registration do
       attributes = { webex_id: 'test', password: 'yeh', partner_id: 'test12312'}
       params = Webex::User::Registration.new(attributes).edit
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'PartnerIDError'
     end
 
     it '#api /p.php with TSP SUCCESS set' do
@@ -79,9 +76,9 @@ describe Webex::User::Registration do
                     {CreateAccount: 'nil', TollFreeCallIn: 'nil', TollCallIn1: 'nil', ParticipantAccessCode: 'nil', SubscribeAccessCode: 'nil'}])
       params = Webex::User::Registration.new(attributes).edit
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'PartnerIDError'
     end
   end
 

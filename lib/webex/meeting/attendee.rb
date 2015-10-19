@@ -3,6 +3,7 @@ module Webex
     # comment
     class Attendee
       include Webex
+      include Webex::Meeting
       attr_accessor :meeting_key, :back_url, :invitation, :attendees, :cancel_mail, :email
 
       # attendees: [{FullName: FullName1, EmailAddress: nil, PhoneCountry: nil, PhoneArea: nil, PhoneLocal: nil, PhoneExt: nil, TimeZone: nil, Language: nil, Locale: nil, AddToAddressBook: nil},
@@ -16,20 +17,20 @@ module Webex
 
       def add
         option_required! :attendees
-        { params: generate_params(api_type: 'AA'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'AA')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def delete
         option_required! :email
-        { params: generate_params(api_type: 'DA'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'DA')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def detail
         option_required! :email
-        { params: generate_params(api_type: 'MD'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'MD')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       private

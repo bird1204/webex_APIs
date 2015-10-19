@@ -3,6 +3,7 @@ module Webex
     # comment
     class Partner
       include Webex
+      include Webex::User
       attr_accessor :webex_id, :ticket, :password, :back_type, :back_url, :email,
                     :session, :first_name, :last_name, :new_password
       def initialize(attributes = {})
@@ -12,13 +13,13 @@ module Webex
       end
 
       def login
-        { params: generate_params(api_type: 'LI'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'LI')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def logout
-        { params: generate_params(api_type: 'LO'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'LO')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       private

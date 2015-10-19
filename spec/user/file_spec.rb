@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe Webex::User::File do
-  api_url = 'https://engsound.webex.com/engsound/p.php'
   custom_attributes = { back_url: 'localhost:4567' }
 
   context '[PARAMS]download' do
@@ -10,9 +9,9 @@ describe Webex::User::File do
     it '#api /p.php with custom set' do
       params = Webex::User::File.new(custom_attributes.merge!(file_name: 'xxx')).download
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'UnknownATCommand'
     end
   end
 
@@ -28,9 +27,9 @@ describe Webex::User::File do
     it '#api /p.php with custom set' do
       params = Webex::User::File.new(custom_attributes).list
       
-      expect(params.keys).to match_array [:params, :url]
-      expect(params[:params][:AT]).to eq api_type
-      expect(params[:url].to_s).to eq api_url
+      expect(params['AT']).to eq api_type
+      expect(params['ST']).to eq 'FAIL'
+      expect(params['RS']).to eq 'UnknownATCommand'
     end
   end
 end

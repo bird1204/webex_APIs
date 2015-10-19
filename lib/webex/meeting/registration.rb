@@ -3,6 +3,7 @@ module Webex
     # comment
     class Registration
       include Webex
+      include Webex::Meeting
       attr_accessor :meeting_key, :back_url, :first_name, :last_name, :email_address, :job_title,
         :computer_name, :address_1, :address_2, :city, :state, :zip_code, :country,
         :phone_number, :fax, :name_and_values, :text_box_contents, :check_box_contents,
@@ -16,14 +17,14 @@ module Webex
 
       def form
         option_required! :meeting_key
-        { params: generate_params(api_type: 'GF'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'GF')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def register
         option_required! :meeting_key, :first_name, :last_name, :email_address, :job_title, :computer_name
-        { params: generate_params(api_type: 'RM'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'RM')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       private

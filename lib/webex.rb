@@ -1,3 +1,4 @@
+require 'core_ext/string'
 require 'webex/error/errors'
 require 'webex/version'
 require 'webex/configuration'

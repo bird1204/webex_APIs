@@ -3,6 +3,7 @@ module Webex
     # comment
     class Action
       include Webex
+      include Webex::Meeting
       attr_accessor :meeting_key, :cancel_mail, :back_url,
         :start_feature, :app_handle, :location, :parameter, :url, :document_location,
         :attendee_name, :attendee_mail, :phone, :password, :registration_id
@@ -14,35 +15,35 @@ module Webex
 
       def delete
         option_required! :meeting_key
-        { params: generate_params(api_type: 'DM'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'DM')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def host
         option_required! :meeting_key
-        { params: generate_params(api_type: 'HM'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'HM')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def join
         option_required! :meeting_key
-        { params: generate_params(api_type: 'JM'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'JM')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def list_meetings
-        { params: generate_params(api_type: 'LM'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'LM')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def list_open_meetings
-        { params: generate_params(api_type: 'OM'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'OM')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       def schedule
-        { params: generate_params(api_type: 'SM'),
-          url: URI.join(CONFIGURATION.host_url + PATH_URL) }
+        res = Net::HTTP.post_form post_url, generate_params(api_type: 'SM')
+        Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
       private
