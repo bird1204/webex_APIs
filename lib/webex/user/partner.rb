@@ -22,8 +22,6 @@ module Webex
         Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
-      private
-
       def generate_params(overwrite_params = {})
         result = {}
         result[:AT] = overwrite_params[:api_type]
