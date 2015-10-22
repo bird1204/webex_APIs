@@ -46,21 +46,6 @@ module Webex
         Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
-      private
-
-      def cancel_mail?
-        cancel_mail
-      end
-
-      def tracking_code_hash
-        attribute_length!(10, tracking_codes)
-        hash = {}
-        tracking_codes.each_with_index do |code, index|
-          hash.merge!("TC#{index + 1}".to_sym => code)
-        end
-        hash
-      end
-
       def generate_params(overwrite_params = {})
         result = {}
         result[:AT] = overwrite_params[:api_type]
@@ -88,6 +73,21 @@ module Webex
           result[:RID] = registration_id
         end
         result.delete_if { |k, v| v.nil? }
+      end
+
+      private
+
+      def cancel_mail?
+        cancel_mail
+      end
+
+      def tracking_code_hash
+        attribute_length!(10, tracking_codes)
+        hash = {}
+        tracking_codes.each_with_index do |code, index|
+          hash.merge!("TC#{index + 1}".to_sym => code)
+        end
+        hash
       end
 
       def attribute_length!(length, attribute)
