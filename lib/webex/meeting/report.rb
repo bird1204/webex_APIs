@@ -24,21 +24,6 @@ module Webex
         Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
-      private
-
-      def cancel_mail?
-        cancel_mail
-      end
-
-      def phone_params
-        result = {}
-        result[:PC] = phones[:PhoneCountry]
-        result[:PA] = phones[:PhoneArea]
-        result[:PN] = phones[:PhoneNumber]
-        result[:PE] = phones[:PhoneExt]
-        result
-      end
-
       def generate_params(overwrite_params = {})
         result = {}
         result[:AT] = overwrite_params[:api_type]
@@ -61,6 +46,21 @@ module Webex
         result[:VD] = view_download
         result[:BU] = back_url
         result.delete_if { |k, v| v.nil? }
+      end
+      
+      private
+
+      def cancel_mail?
+        cancel_mail
+      end
+
+      def phone_params
+        result = {}
+        result[:PC] = phones[:PhoneCountry]
+        result[:PA] = phones[:PhoneArea]
+        result[:PN] = phones[:PhoneNumber]
+        result[:PE] = phones[:PhoneExt]
+        result
       end
     end
   end

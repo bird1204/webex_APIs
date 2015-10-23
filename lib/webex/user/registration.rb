@@ -40,6 +40,46 @@ module Webex
         Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
 
+      def generate_params(overwrite_params = {})
+        result = {}
+        result[:AT] = overwrite_params[:api_type]
+        result[:PW] = password
+        result[:PID] = partner_id
+        result[:WID] = webex_id
+        result[:Address1] = address_1
+        result[:Address2] = address_2
+        result[:City] = city
+        result[:State] = state
+        result[:ZipCode] = zip_code
+        result[:Country] = country
+        result[:AC] = computer
+        result[:AS] = storage
+        result[:LA] = admin
+        result[:MW] = web_ex_type
+        result[:PL] = partner_link
+        result[:PT] = portal
+        result[:MT] = meeting_type
+        result[:TimeZone] = time_zone
+        result[:BU] = back_url
+        result[:OC] = one_click
+
+        if result[:AT] == 'SU'
+          result[:FN] = first_name
+          result[:LN] = last_name
+          result[:EM] = email
+          result[:ForceChangeUserPwd] = password_change
+        end
+
+        if result[:AT] == 'EU'
+          result[:NFN] = first_name
+          result[:NLN] = last_name
+          result[:NEM] = email
+          result[:NPW] = new_password
+          result[:NWID] = new_webex_id
+        end
+        merge_hash!(result)
+      end
+
       private
 
       def tracking_code_hash
@@ -85,46 +125,6 @@ module Webex
         overwrite_params.merge!(tracking_code_hash) if tracking_codes
         overwrite_params.merge!(tsp_bridges_hash) if overwrite_params[:AT] == 'EU' && tsp_bridges 
         overwrite_params.delete_if { |k, v| v.nil? }
-      end
-
-      def generate_params(overwrite_params = {})
-        result = {}
-        result[:AT] = overwrite_params[:api_type]
-        result[:PW] = password
-        result[:PID] = partner_id
-        result[:WID] = webex_id
-        result[:Address1] = address_1
-        result[:Address2] = address_2
-        result[:City] = city
-        result[:State] = state
-        result[:ZipCode] = zip_code
-        result[:Country] = country
-        result[:AC] = computer
-        result[:AS] = storage
-        result[:LA] = admin
-        result[:MW] = web_ex_type
-        result[:PL] = partner_link
-        result[:PT] = portal
-        result[:MT] = meeting_type
-        result[:TimeZone] = time_zone
-        result[:BU] = back_url
-        result[:OC] = one_click
-
-        if result[:AT] == 'SU'
-          result[:FN] = first_name
-          result[:LN] = last_name
-          result[:EM] = email
-          result[:ForceChangeUserPwd] = password_change
-        end
-
-        if result[:AT] == 'EU'
-          result[:NFN] = first_name
-          result[:NLN] = last_name
-          result[:NEM] = email
-          result[:NPW] = new_password
-          result[:NWID] = new_webex_id
-        end
-        merge_hash!(result)
       end
 
       def attribute_length!(length, attribute)

@@ -32,6 +32,18 @@ module Webex
         res = Net::HTTP.post_form post_url, generate_params(api_type: 'MD')
         Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
+      
+      def generate_params(overwrite_params = {})
+        result = {}
+        result[:AT] = overwrite_params[:api_type]
+        result[:MK] = meeting_key
+        result[:BU] = back_url
+        result[:EM] = email
+        result[:EI] = invitation
+        result.merge!(attendees_hash) if  result[:AT] == 'AA'
+        result[:EC] = cancel_mail? if result[:AT] == 'DA'
+        result.delete_if { |k, v| v.nil? }
+      end
 
       private
 
@@ -48,18 +60,6 @@ module Webex
           end
         end
         hash
-      end
-
-      def generate_params(overwrite_params = {})
-        result = {}
-        result[:AT] = overwrite_params[:api_type]
-        result[:MK] = meeting_key
-        result[:BU] = back_url
-        result[:EM] = email
-        result[:EI] = invitation
-        result.merge!(attendees_hash) if  result[:AT] == 'AA'
-        result[:EC] = cancel_mail? if result[:AT] == 'DA'
-        result.delete_if { |k, v| v.nil? }
       end
     end
   end

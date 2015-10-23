@@ -26,31 +26,7 @@ module Webex
         res = Net::HTTP.post_form post_url, generate_params(api_type: 'RM')
         Hash[res.body.stringify_string.split('&').map! { |i| i.split('=') }]
       end
-
-      private
-
-      def name_and_value_params
-        attribute_length!(15, name_and_values)
-        hash = {}
-        name_and_values.each_with_index do |params, index|
-          hash.merge!(:"name#{index + 1}" => params[:name])
-          hash.merge!(:"value#{index + 1}" => params[:value])
-        end
-        hash
-      end
-
-      def tc_params
-        attributes = [ text_box_contents, check_box_contents, radio_button_contents, dropdown_list_selections ]
-        keys = ['TX', 'CB', 'RB', 'DL']
-        hash = {}
-        attributes.each_with_index do |params, index_of_keys|
-          params.each_with_index do |value, index_of_value|
-            hash.merge!(:"#{keys[index_of_keys]}#{index_of_value + 1}" => value)
-          end if params
-        end
-        hash
-      end
-
+      
       def generate_params(overwrite_params = {})
         result = {}
         result[:AT] = overwrite_params[:api_type]
@@ -75,6 +51,30 @@ module Webex
           result.merge!(tc_params)
         end
         result.delete_if { |k, v| v.nil? }
+      end
+
+      private
+
+      def name_and_value_params
+        attribute_length!(15, name_and_values)
+        hash = {}
+        name_and_values.each_with_index do |params, index|
+          hash.merge!(:"name#{index + 1}" => params[:name])
+          hash.merge!(:"value#{index + 1}" => params[:value])
+        end
+        hash
+      end
+
+      def tc_params
+        attributes = [ text_box_contents, check_box_contents, radio_button_contents, dropdown_list_selections ]
+        keys = ['TX', 'CB', 'RB', 'DL']
+        hash = {}
+        attributes.each_with_index do |params, index_of_keys|
+          params.each_with_index do |value, index_of_value|
+            hash.merge!(:"#{keys[index_of_keys]}#{index_of_value + 1}" => value)
+          end if params
+        end
+        hash
       end
 
       def attribute_length!(length, attribute)
